@@ -39,7 +39,7 @@ def check_direction(
     return True
 
 
-def main():
+def part_1():
     with open("day4.txt") as f:
         grid = f.readlines()
     count = 0
@@ -52,5 +52,26 @@ def main():
     return count
 
 
+def part_2():
+    with open("day4.txt") as f:
+        grid = [line.rstrip("\n") for line in f.readlines()]
+    count = 0
+    for y in range(1, len(grid) - 1):
+        for x in range(1, len(grid[0].strip()) - 1):
+            if grid[y][x] != "A":
+                continue
+
+            corners = [
+                (grid[y - 1][x - 1], grid[y + 1][x + 1]),
+                (grid[y - 1][x + 1], grid[y + 1][x - 1]),
+            ]
+
+            if all(("M" in pair and "S" in pair) for pair in corners):
+                count += 1
+
+    return count
+
+
 if __name__ == "__main__":
-    print(main())
+    print(part_1())
+    print(part_2())
